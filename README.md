@@ -1,3 +1,8 @@
+This is a modified fork from [marcosrg9/YouTubeTV](https://github.com/marcosrg9/YouTubeTV) which ads experimental adblock support.
+I wont upload any builds as this is first time i do something with nodejs/electron and i dont know if added it correctly (even though it seems to work 😅)
+
+Original Readme:
+
 <div align="center">
 <img src="./build/icon.png" width=90px>
 

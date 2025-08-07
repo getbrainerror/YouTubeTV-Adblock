@@ -3,6 +3,10 @@ import { platform } from 'os';
 import { cwd } from 'process';
 import { join } from 'path';
 import { Settings } from '../settings/settings.renderer';
+import { ElectronBlocker, fullLists, Request } from '@ghostery/adblocker-electron';
+import { readFileSync, writeFileSync } from 'fs';
+import fetch from 'cross-fetch';
+
 
 import { app,
          BrowserWindow,
@@ -42,9 +46,9 @@ export class Renderer {
     /** Cursor visibility flag. */
     private _cursor: boolean = false;
 
-    /** YouTube TV url with path/params */
+    /** YouTube TV url with path/params */   
     private readonly _url: string = 'https://www.youtube.com/tv?';
-
+    
     /** JavaScript injection code */
     private jsic: string = '';
 
@@ -66,7 +70,7 @@ export class Renderer {
 
             this.window.webContents.on('dom-ready', () => this.injectJSCode.bind(this));
 
-            this.setAccelerators();
+            this.setAccelerators();   
 
             if (platform() === 'darwin') {
                 this.window.on('enter-full-screen', () => this.fullScreen = true)
@@ -84,7 +88,7 @@ export class Renderer {
     }
 
     /** Create a new renderer window. */
-    private createWindow() {
+    private async createWindow() {
 
         this.window = new BrowserWindow({
             width: 1230,
@@ -103,6 +107,21 @@ export class Renderer {
         });
 
         process.nextTick(() => this.loadSettings());
+
+        
+        let blocker = await ElectronBlocker.fromLists(
+                fetch,
+                fullLists,
+                {
+                    enableCompression: true,
+                },
+                {
+                    path: 'engine.bin',
+                    read: async (...args) => readFileSync(...args),
+                    write: async (...args) => writeFileSync(...args),
+                }
+        );
+        blocker.enableBlockingInSession(this.window.webContents.session);
         
     }
 
