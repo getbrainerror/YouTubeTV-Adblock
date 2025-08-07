@@ -67,7 +67,7 @@ export class Renderer {
             this.listenWindowMoveEvents();
 
             this.url = '__DFT__';
-
+            this.window.webContents.setMaxListeners(50);
             this.window.webContents.on('dom-ready', () => this.injectJSCode.bind(this));
 
             this.setAccelerators();   
