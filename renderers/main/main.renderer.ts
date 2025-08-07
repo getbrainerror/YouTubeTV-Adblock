@@ -116,13 +116,12 @@ export class Renderer {
                     enableCompression: true,
                 },
                 {
-                    path: 'engine.bin',
+                    path: join(app.getPath('userData'), 'engine.bin'),
                     read: async (...args) => readFileSync(...args),
                     write: async (...args) => writeFileSync(...args),
                 }
         );
         blocker.enableBlockingInSession(this.window.webContents.session);
-        
     }
 
     /**
