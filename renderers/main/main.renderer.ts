@@ -94,7 +94,7 @@ export class Renderer {
             width: 1230,
             height: 720,
             titleBarStyle: platform() === 'darwin' ? 'hiddenInset' : 'default',
-            fullscreen: false,
+            fullscreen: true,
             fullscreenable: true,
             title: 'YouTube TV',
             backgroundColor: '#282828',
