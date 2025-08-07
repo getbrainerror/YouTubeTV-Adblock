@@ -109,7 +109,7 @@ export class Renderer {
         process.nextTick(() => this.loadSettings());
 
         
-        let blocker = await ElectronBlocker.fromLists(
+        const blocker = await ElectronBlocker.fromLists(
                 fetch,
                 fullLists,
                 {
